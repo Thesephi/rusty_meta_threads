@@ -1,8 +1,8 @@
 [package]
 name = "rusty_meta_threads"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
-description = "rust SDK for integrating with Meta Threads API"
+description = "Rust SDK for integrating with Meta Threads API"
 repository = "https://github.com/Thesephi/rusty_meta_threads.git"
 license = "MIT"
 
