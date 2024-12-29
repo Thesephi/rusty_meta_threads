@@ -1,0 +1,16 @@
+[package]
+name = "rusty_meta_threads"
+version = "0.1.0"
+edition = "2021"
+description = "rust SDK for integrating with Meta Threads API"
+repository = "https://github.com/Thesephi/rusty_meta_threads.git"
+license = "MIT"
+
+[lib]
+name = "rusty_meta_threads"
+path = "src/mod.rs"
+crate-type = ["rlib"]
+
+[dependencies]
+url = "2.5.4"
+urlencoding = "2.1.3"
