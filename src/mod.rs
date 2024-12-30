@@ -1,11 +1,14 @@
-use log::debug;
+use log::{debug, warn};
 use serde::Deserialize;
 use url::Url;
 use urlencoding::encode;
 mod utils;
 
+// @TODO contemplate if we should make env vars static
+
 #[derive(Deserialize, Debug)]
 struct ThreadsApiRespErrorPayload {
+    #[allow(dead_code)]
     message: String,
     // code: u8,
     // error_subcode: u16,
@@ -24,6 +27,7 @@ pub struct SimpleThreadsLongLivedTokenResponse {
     pub access_token: Option<String>,
     pub token_type: Option<String>,
     pub expires_in: Option<u32>,
+    #[allow(dead_code)]
     error: Option<ThreadsApiRespErrorPayload>,
 }
 
@@ -44,11 +48,19 @@ pub fn get_threads_login_url() -> String {
 // @TODO check whether it's a better practice to return `Cow<'_, str>`
 pub fn get_threads_login_url_for_state(app_state: &str) -> String {
     let env = utils::read_dot_env();
-    let app_id = env.get("THREADS_APP_ID").unwrap();
-    let redirect_uri = encode(env.get("THREADS_AUTH_CODE_REDIRECT_URI").unwrap());
+    let app_id = env
+        .get("THREADS_APP_ID")
+        .expect("missing env: THREADS_APP_ID");
+    let redirect_uri = encode(
+        env.get("THREADS_AUTH_CODE_REDIRECT_URI")
+            .expect("missing env: THREADS_AUTH_CODE_REDIRECT_URI"),
+    );
     let app_scope = match env.get("THREADS_APP_AUTH_SCOPE") {
         Some(val) => val,
-        None => "threads_basic",
+        None => {
+            warn!("missing env: THREADS_APP_AUTH_SCOPE, defaulting to 'threads_basic'");
+            "threads_basic"
+        }
     };
 
     format!(
@@ -71,7 +83,7 @@ pub fn get_code_from_redirect_uri(url: &str) -> String {
             return String::from(val);
         };
     }
-    return String::from("");
+    String::from("")
 }
 
 // @TODO document that this expires in 1 hour
@@ -79,9 +91,16 @@ pub async fn get_short_lived_bearer_token(
     code: &str,
 ) -> Result<SimpleThreadsShortLivedTokenResponse, reqwest::Error> {
     let env = utils::read_dot_env();
-    let app_id = env.get("THREADS_APP_ID").unwrap();
-    let app_secret = env.get("THREADS_APP_SECRET").unwrap();
-    let redirect_uri = encode(env.get("THREADS_AUTH_CODE_REDIRECT_URI").unwrap());
+    let app_id = env
+        .get("THREADS_APP_ID")
+        .expect("missing env: THREADS_APP_ID");
+    let app_secret = env
+        .get("THREADS_APP_SECRET")
+        .expect("missing env: THREADS_APP_SECRET");
+    let redirect_uri = encode(
+        env.get("THREADS_AUTH_CODE_REDIRECT_URI")
+            .expect("missing env: THREADS_AUTH_CODE_REDIRECT_URI"),
+    );
     let url = format!(
         "https://graph.threads.net/oauth/access_token\
         ?client_id={app_id}\
@@ -118,7 +137,9 @@ pub async fn get_long_lived_bearer_token(
     short_lived_token: &str,
 ) -> Result<SimpleThreadsLongLivedTokenResponse, reqwest::Error> {
     let env = utils::read_dot_env();
-    let app_secret = env.get("THREADS_APP_SECRET").unwrap();
+    let app_secret = env
+        .get("THREADS_APP_SECRET")
+        .expect("missing env: THREADS_APP_SECRET");
     let url = format!(
         "https://graph.threads.net/access_token\
         ?grant_type=th_exchange_token\
@@ -183,9 +204,7 @@ pub async fn refresh_long_lived_bearer_token(
 
 // @TODO have fields as fn arguments instead of hardcoding
 pub async fn get_profile_info(bearer_token: &str) -> Result<ThreadsUserProfile, reqwest::Error> {
-    let url = format!(
-        "https://graph.threads.net/me?fields=id%2Cusername%2Cname%2Cthreads_profile_picture_url%2Cthreads_biography"
-    )
+    let url = "https://graph.threads.net/me?fields=id%2Cusername%2Cname%2Cthreads_profile_picture_url%2Cthreads_biography".to_string()
     .to_string();
 
     let res = reqwest::Client::new()

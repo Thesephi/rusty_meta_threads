@@ -1,6 +1,7 @@
 # rusty_meta_threads
 
-A Rust SDK that helps interact with [Meta Threads API](https://developers.facebook.com/docs/threads)
+A Rust SDK that helps interact with
+[Meta Threads API](https://developers.facebook.com/docs/threads)
 
 ## Usage example
 
@@ -40,7 +41,8 @@ let long_lived_token = rusty_meta_threads::get_long_lived_bearer_token(&short_li
     .unwrap()
     .access_token;
 
-// either `short_lived_token` or `long_lived_token` can be used to make API calls against Threads, for example:
+// either `short_lived_token` or `long_lived_token` can be used to make API
+// calls against Threads, for example:
 let profile_info = rusty_meta_threads::get_profile_info(&long_lived_token)
     .await
     .unwrap();
@@ -50,7 +52,6 @@ let refreshed_token = rusty_meta_threads::refresh_long_lived_bearer_token(&long_
     .await
     .unwrap()
     .access_token;
-
 ```
 
 ## Contributor notice

@@ -1,3 +1,11 @@
+## [0.1.3] - 2024-12-30
+
+### Changed
+
+- direct env vars (CLI arguments) take precedence over values in `.env` file
+- failure to read `.env` file or missing required envs now results in useful error messages (assuming a [compatible log implementation](https://github.com/rust-lang/log?tab=readme-ov-file#in-executables))
+- license change (following a rust community convention)
+
 ## [0.1.2] - 2024-12-30
 
 ### Added
