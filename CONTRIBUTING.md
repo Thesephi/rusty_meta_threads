@@ -8,13 +8,14 @@
 3. There is no direct pushing to `main` branch. Any change must go through a
    Pull Request. This applies to all contributor roles. This includes typo
    updates and other such one-liner fixes.
-4. After `v1.0.0`, Code Coverage on the default branch (`main`) must always be 100%.
+4. After `v1.0.0`, Code Coverage on the default branch (`main`) must always be
+   100%.
 
 ## Library Publishing
 
-1. Publishing into
-   [Crates.io](https://crates.io/crates/rusty_meta_threads) may only happen
-   via git tags. Ideally, a GitHub Action should be set up to automate publishing when a new tag is created on (or pushed to) remote.
+1. Publishing into [Crates.io](https://crates.io/crates/rusty_meta_threads) may
+   only happen via git tags. Ideally, a GitHub Action should be set up to
+   automate publishing when a new tag is created on (or pushed to) remote.
 2. <ins>Only</ins> tag official releases on `main` branch. In other words: the
    tagged commit <ins>must</ins> exist on the `main` branch.
 3. Our git tags must always have the format `vX.Y.Z`: starting with the letter
