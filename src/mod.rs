@@ -1,25 +1,21 @@
+mod reply_management;
+mod retrieve_media;
+mod shared;
+mod utils;
+pub use crate::reply_management::*;
+pub use crate::retrieve_media::*;
 use log::{debug, warn};
 use serde::Deserialize;
 use url::Url;
 use urlencoding::encode;
-mod utils;
 
 // @TODO contemplate if we should make env vars static
-
-#[derive(Deserialize, Debug)]
-struct ThreadsApiRespErrorPayload {
-    #[allow(dead_code)]
-    message: String,
-    // code: u8,
-    // error_subcode: u16,
-    // fbtrace_id: String,
-}
 
 #[derive(Deserialize, Debug)]
 pub struct SimpleThreadsShortLivedTokenResponse {
     pub access_token: Option<String>,
     pub user_id: Option<u64>,
-    error: Option<ThreadsApiRespErrorPayload>,
+    error: Option<shared::ThreadsApiRespErrorPayload>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -28,7 +24,7 @@ pub struct SimpleThreadsLongLivedTokenResponse {
     pub token_type: Option<String>,
     pub expires_in: Option<u32>,
     #[allow(dead_code)]
-    error: Option<ThreadsApiRespErrorPayload>,
+    error: Option<shared::ThreadsApiRespErrorPayload>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -38,7 +34,7 @@ pub struct ThreadsUserProfile {
     pub name: Option<String>,
     pub threads_profile_picture_url: Option<String>,
     pub threads_biography: Option<String>,
-    error: Option<ThreadsApiRespErrorPayload>,
+    error: Option<shared::ThreadsApiRespErrorPayload>,
 }
 
 pub fn get_threads_login_url() -> String {
@@ -118,7 +114,7 @@ pub async fn get_short_lived_bearer_token(
     );
 
     let res = reqwest::Client::new()
-        .post(url)
+        .post(&url)
         .send()
         .await?
         .json::<SimpleThreadsShortLivedTokenResponse>()
@@ -156,7 +152,7 @@ pub async fn get_long_lived_bearer_token(
     );
 
     let res = reqwest::Client::new()
-        .get(url)
+        .get(&url)
         .send()
         .await?
         .json::<SimpleThreadsLongLivedTokenResponse>()
@@ -187,7 +183,7 @@ pub async fn refresh_long_lived_bearer_token(
     );
 
     let res = reqwest::Client::new()
-        .get(url)
+        .get(&url)
         .send()
         .await?
         .json::<SimpleThreadsLongLivedTokenResponse>()
