@@ -21,7 +21,7 @@ pub async fn get_threads(
         .json::<MetaMediaResponse>()
         .await?;
 
-    // @NOTE it may fail silently if we declare an extra field e.g. `media_url` in the derive Deserialize ie `MetaMediaResponse` in this case. A possible solution is to declare it in the struct as optional ie `Option<media_url>`
+    // @NOTE it may fail silently if we declare a field that's not included in the actual response (e.g. `media_url` in the derive Deserialize ie `MetaMediaResponse` in this case). A possible solution is to declare it in the struct as optional ie `Option<media_url>`
 
     Ok(res)
 }

@@ -6,6 +6,10 @@
 - `get_threads()` lib fn
 - `get_conversations()` lib fn
 
+### Changed
+
+- README example wording
+
 ## [0.1.4] - 2024-12-31
 
 ### Changed
