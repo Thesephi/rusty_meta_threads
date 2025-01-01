@@ -1,5 +1,15 @@
 use serde::Deserialize;
 
+#[derive(Deserialize, Debug)]
+pub struct ThreadsUserProfile {
+    pub id: Option<String>,
+    pub username: Option<String>,
+    pub name: Option<String>,
+    pub threads_profile_picture_url: Option<String>,
+    pub threads_biography: Option<String>,
+    pub error: Option<ThreadsApiRespErrorPayload>,
+}
+
 // https://developers.facebook.com/docs/threads/reply-management#a-thread-s-conversations
 #[derive(Deserialize, Debug)]
 pub struct MetaMedia {
