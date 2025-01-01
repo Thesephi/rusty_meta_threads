@@ -1,9 +1,10 @@
+pub use crate::retrieve_media::MetaMedia;
 use crate::shared::MetaMediaResponse;
 
 pub async fn get_conversations(
     media_id: &str,
     token: &str,
-) -> Result<MetaMediaResponse, reqwest::Error> {
+) -> Result<MetaMediaResponse<MetaMedia>, reqwest::Error> {
     // @TODO get fields from method arguments
     let reverse = false;
     let url = format!(
@@ -19,7 +20,7 @@ pub async fn get_conversations(
         .get(&url)
         .send()
         .await?
-        .json::<MetaMediaResponse>()
+        .json::<MetaMediaResponse<MetaMedia>>()
         .await?;
 
     Ok(res)

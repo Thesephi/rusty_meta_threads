@@ -1,3 +1,14 @@
+## [0.4.0] - 2025-01-01
+
+### Added
+
+- Structs are organized in favour of generated docs e.g. `ThreadsUserProfile` and `MetaMedia`
+- updated example code in README
+
+### Changed
+
+- `id` field becomes mandatory in Structs `ThreadsUserProfile` and `MetaMedia`
+
 ## [0.3.0] - 2025-01-01
 
 ### Changed
