@@ -1,3 +1,9 @@
+## [0.3.0] - 2025-01-01
+
+### Changed
+
+- lib functions are exported into namespaces following public Meta Threads API categories: https://developers.facebook.com/docs/threads
+
 ## [0.2.0] - 2024-12-31
 
 ### Added

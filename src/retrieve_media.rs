@@ -12,7 +12,13 @@ pub async fn get_threads(
     token: &str,
 ) -> Result<MetaMediaResponse, reqwest::Error> {
     // @TODO get fields from method arguments
-    let url = format!("https://graph.threads.net/v1.0/{user_id}/threads?fields=id,media_product_type,media_type,media_url,permalink,owner,username,text,timestamp,shortcode,thumbnail_url,children,has_replies,is_quote_post&since={since}&until={until}&limit={limit}&access_token={token}");
+    let url = format!(
+        "https://graph.threads.net/v1.0/{user_id}/threads\
+        ?fields=id,media_product_type,media_type,media_url,permalink,\
+        owner,username,text,timestamp,shortcode,thumbnail_url,children,\
+        has_replies,is_quote_post\
+        &since={since}&until={until}&limit={limit}&access_token={token}"
+    );
 
     let res = reqwest::Client::new()
         .get(&url)
@@ -21,7 +27,10 @@ pub async fn get_threads(
         .json::<MetaMediaResponse>()
         .await?;
 
-    // @NOTE it may fail silently if we declare a field that's not included in the actual response (e.g. `media_url` in the derive Deserialize ie `MetaMediaResponse` in this case). A possible solution is to declare it in the struct as optional ie `Option<media_url>`
+    // @NOTE it may fail silently if we declare a field that's not included in
+    // the actual response (e.g. `media_url` in the derive Deserialize ie
+    // `MetaMediaResponse` in this case). A possible solution is to declare it
+    // in the struct as optional ie `Option<media_url>`
 
     Ok(res)
 }

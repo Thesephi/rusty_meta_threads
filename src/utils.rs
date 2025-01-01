@@ -14,7 +14,7 @@ pub fn read_dot_env() -> HashMap<String, String> {
         }
     }
     // as per convention, we overwrite .env with direct env vars
-    for (key, val) in std::env::vars() {
+    for (key, val) in env::vars() {
         ret_val.insert(key, val);
     }
     ret_val
