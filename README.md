@@ -18,7 +18,7 @@ THREADS_AUTH_CODE_REDIRECT_URI=<REDIRECT_URL>
 ```rs
 use rusty_meta_threads::{auth, profiles};
 
-//------------------------------
+//------------------------------------------------------------
 // CLIENT-SIDE
 
 let login_url = auth::get_threads_login_url();
@@ -27,16 +27,17 @@ let login_url = auth::get_threads_login_url();
 // a request to `<REDIRECT_URL>?code=<CODE>`, which we'll handle
 // on the server-side
 
-//------------------------------
+//------------------------------------------------------------
 // SERVER-SIDE
 
-// inside the HTTP endpoint handler logic for e.g. my-app.domain/auth
+// inside the HTTP endpoint handler logic for
+// e.g. my-app.domain/auth
 let code =
     auth::get_code_from_redirect_uri("<REDIRECT_URL_WITH_CODE>");
 
 // `code` can now be exchanged for a short-lived bearer token
 let short_lived_token =
-    rusty_meta_threads::get_short_lived_bearer_token(&code)
+    auth::get_short_lived_bearer_token(&code)
         .await
         .unwrap()
         .access_token;
