@@ -1,5 +1,9 @@
 ## [0.5.0] - 2025-03-15
 
+### Changed
+
+- rust edition to `2024`
+
 ### Added
 
 - `get_mentions()` lib fn
