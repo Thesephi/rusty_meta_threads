@@ -188,3 +188,24 @@ pub async fn refresh_long_lived_bearer_token(
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::env;
+
+    #[test]
+    fn get_login_url() {
+        unsafe {
+            env::set_var("THREADS_APP_ID", "foo");
+            env::set_var("THREADS_AUTH_CODE_REDIRECT_URI", "http://bar");
+        }
+        let url = get_threads_login_url();
+        assert_eq!(
+            url,
+            String::from(
+                "https://threads.net/oauth/authorize?client_id=foo&redirect_uri=http%3A%2F%2Fbar&scope=threads_basic&response_type=code&state=rusty_meta_threads"
+            )
+        );
+    }
+}
