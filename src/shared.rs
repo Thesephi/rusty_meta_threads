@@ -10,7 +10,7 @@ pub struct MetaMediaResponse<T> {
 #[derive(Deserialize, Debug)]
 pub struct Paging {
     cursors: Cursors,
-    pub next: String,
+    pub next: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -23,7 +23,7 @@ pub struct Cursors {
 pub struct ThreadsApiRespErrorPayload {
     #[allow(dead_code)]
     pub message: String,
-    code: u8,
-    error_subcode: u16,
+    code: u32,
+    error_subcode: Option<u32>,
     fbtrace_id: String,
 }

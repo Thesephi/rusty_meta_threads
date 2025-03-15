@@ -1,3 +1,15 @@
+## [0.5.0] - 2025-03-15
+
+### Added
+
+- `get_mentions()` lib fn
+- debug logging for `read_dot_env()`
+
+### Fixed
+
+- several `reqwest` response decoding failures were fixed
+- `read_dot_env()` should work with latest rust version (handling both lines with and without comments)
+
 ## [0.4.0] - 2025-01-01
 
 ### Added
