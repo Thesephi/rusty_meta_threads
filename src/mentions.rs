@@ -9,7 +9,7 @@ pub async fn get_mentions(
     let the_fields = if let Some(f) = fields {
         f
     } else {
-        "id%2Cusername%2Ctext%2Cmedia_url"
+        "id,username,text,media_url,root_post,replied_to"
     };
 
     let url = format!(

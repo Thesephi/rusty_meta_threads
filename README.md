@@ -1,5 +1,9 @@
 # rusty_meta_threads
 
+![Crates.io Version](https://img.shields.io/crates/v/rusty_meta_threads)
+[![Documentation](https://docs.rs/rusty_meta_threads/badge.svg)](https://docs.rs/rusty_meta_threads)
+[![MIT/Apache-2 licensed](https://img.shields.io/crates/l/rusty_meta_threads)](./LICENSE-APACHE)
+
 A community Rust SDK that helps interact with
 [Meta Threads API](https://developers.facebook.com/docs/threads)
 

@@ -1,3 +1,11 @@
+## [0.6.0] - 2025-03-17
+
+### Added
+
+- `get_thread()` lib fn
+- `get_mentions()` lib fn now also retrieves `root_post` and `replied_to` fields by default
+- explicit license files included in repo
+
 ## [0.5.0] - 2025-03-15
 
 ### Changed
