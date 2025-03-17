@@ -1,6 +1,11 @@
 use crate::shared::MetaMediaResponse;
 use serde::Deserialize;
 
+#[derive(Deserialize, Debug)]
+pub struct SimpleMediaObject {
+    pub id: String,
+}
+
 // https://developers.facebook.com/docs/threads/reply-management#a-thread-s-conversations
 #[derive(Deserialize, Debug)]
 pub struct MetaMedia {
@@ -15,8 +20,8 @@ pub struct MetaMedia {
     pub permalink: Option<String>,
     pub shortcode: Option<String>,
     pub has_replies: Option<bool>,
-    // pub root_post: { id: "1234567890" },
-    // pub replied_to: { id: "1234567890" },
+    pub root_post: Option<SimpleMediaObject>,
+    pub replied_to: Option<SimpleMediaObject>,
     // pub is_reply: bool,
     // pub hide_status: String, // NOT_HUSHED | ...
 }
@@ -55,6 +60,31 @@ pub async fn get_threads(
     // the actual response (e.g. `media_url` in the derive Deserialize ie
     // `MetaMediaResponse` in this case). A possible solution is to declare it
     // in the struct as optional ie `Option<media_url>`
+
+    Ok(res)
+}
+
+pub async fn get_thread(
+    thread_id: &str,
+    fields: Option<&str>,
+    token: &str,
+) -> Result<MetaMedia, reqwest::Error> {
+    let the_fields = if let Some(f) = fields {
+        f
+    } else {
+        "id,root_post,replied_to,media_product_type,media_type,media_url,permalink,owner,username,text,timestamp,shortcode,thumbnail_url,children,is_quote_post"
+    };
+
+    let url = format!(
+        "https://graph.threads.net/v1.0/{thread_id}?fields={the_fields}&access_token={token}"
+    );
+
+    let res = reqwest::Client::new()
+        .get(&url)
+        .send()
+        .await?
+        .json::<MetaMedia>()
+        .await?;
 
     Ok(res)
 }
