@@ -1,3 +1,9 @@
+## [0.6.1] - 2025-03-20
+
+### Added
+
+- `utils::read_dot_env()` util fn exposed
+
 ## [0.6.0] - 2025-03-17
 
 ### Added

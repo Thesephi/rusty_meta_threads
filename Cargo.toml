@@ -1,6 +1,6 @@
 [package]
 name = "rusty_meta_threads"
-version = "0.6.0"
+version = "0.6.1"
 edition = "2024"
 description = "Community Rust SDK for integrating with Meta Threads API"
 repository = "https://github.com/Thesephi/rusty_meta_threads.git"
