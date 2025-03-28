@@ -68,7 +68,7 @@ mod tests {
 
         let reply_to_id = "17961951074882947";
         let text = encode("you see me rollin' 🥁");
-        let image_url = "https://i.imgur.com/3Wbebbo.png";
+        let image_url = "https://i.imgur.com/Cj33AKk.png";
         let res = create_reply(reply_to_id, Some(&*text), Some(image_url), None, &token).await;
 
         debug!("{:?}", res);
