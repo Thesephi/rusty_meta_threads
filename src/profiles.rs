@@ -57,8 +57,10 @@ mod tests {
         let env = read_dot_env();
         let token = env.get("ACCESS_TOKEN").unwrap();
 
-        let res = get_profile_info(token).await.unwrap();
+        let res = get_profile_info(token).await;
 
         debug!("profile fetched {:?}", res);
+
+        assert_eq!(true, res.is_ok());
     }
 }
