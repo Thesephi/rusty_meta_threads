@@ -50,7 +50,7 @@ mod tests {
         let token = env.get("ACCESS_TOKEN").unwrap();
 
         let res =
-            get_oembed_html("https://www.threads.net/@dkode___/post/DHrAOfItbTe", token).await;
+            get_oembed_html("https://www.threads.net/@dkode___/post/DHwBylVNThs", token).await;
 
         debug!("oembed response fetched: {:?}", res);
 
