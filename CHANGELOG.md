@@ -1,3 +1,11 @@
+## [0.7.0] - 2025-03-28
+
+### Added
+
+- `create_reply()` lib fn
+- `get_oembed_html()` lib fn
+- `publish_media_container()` lib fn
+
 ## [0.6.1] - 2025-03-20
 
 ### Added

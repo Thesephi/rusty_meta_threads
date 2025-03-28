@@ -42,3 +42,25 @@ pub async fn get_profile_info(bearer_token: &str) -> Result<ThreadsUserProfile, 
         None => Ok(res),
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::utils::read_dot_env;
+    #[tokio::test]
+    async fn test_get_profile_info() {
+        let should_log_verbose = true;
+        let _ = env_logger::builder()
+            .is_test(!should_log_verbose)
+            .try_init();
+
+        let env = read_dot_env();
+        let token = env.get("ACCESS_TOKEN").unwrap();
+
+        let res = get_profile_info(token).await;
+
+        debug!("profile fetched {:?}", res);
+
+        assert_eq!(true, res.is_ok());
+    }
+}
