@@ -1,6 +1,5 @@
 pub use crate::retrieve_media::MetaMedia;
 use crate::shared::MetaMediaResponse;
-use log::debug;
 
 pub async fn get_mentions(
     user_id: &str,
@@ -17,8 +16,6 @@ pub async fn get_mentions(
         "https://graph.threads.net/{user_id}/mentions\
         ?fields={the_fields}",
     );
-
-    debug!("requesting {}", url);
 
     let res = reqwest::Client::new()
         .get(url)
