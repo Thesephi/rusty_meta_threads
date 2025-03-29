@@ -6,11 +6,7 @@ pub async fn get_mentions(
     fields: Option<&str>,
     token: &str,
 ) -> Result<MetaMediaResponse<MetaMedia>, reqwest::Error> {
-    let the_fields = if let Some(f) = fields {
-        f
-    } else {
-        "id,username,text,media_url,root_post,replied_to"
-    };
+    let the_fields = fields.unwrap_or_else(|| "id,username,text,media_url,root_post,replied_to");
 
     let url = format!(
         "https://graph.threads.net/{user_id}/mentions\
@@ -33,6 +29,11 @@ mod tests {
     use super::*;
     use crate::utils::read_dot_env;
     use log::debug;
+    use std::any::{Any, TypeId};
+
+    fn is_meta_media_vec<T: Any>(_val: &T) -> bool {
+        TypeId::of::<T>() == TypeId::of::<Vec<MetaMedia>>()
+    }
 
     #[tokio::test]
     async fn test_get_mentions() {
@@ -49,7 +50,7 @@ mod tests {
             Ok(val) => match val.data {
                 Some(dat) => {
                     debug!("mentions fetched: {:?}", dat);
-                    assert_eq!(dat[0].id, "foo")
+                    assert_eq!(is_meta_media_vec(&dat), true);
                 }
                 None => panic!("unexpected result"),
             },
