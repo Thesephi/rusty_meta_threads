@@ -11,8 +11,7 @@ pub async fn create_reply(
 ) -> Result<SimpleMediaObject, reqwest::Error> {
     let mut url = format!(
         "https://graph.threads.net/v1.0/me/threads\
-        ?reply_to_id={reply_to_id}\
-        &access_token={token}"
+        ?reply_to_id={reply_to_id}"
     );
 
     let mut publish_wait_time_ms = 300;
@@ -34,6 +33,7 @@ pub async fn create_reply(
 
     let media_container = reqwest::Client::new()
         .post(&url)
+        .bearer_auth(token)
         .send()
         .await?
         .json::<SimpleMediaObject>()
