@@ -16,15 +16,13 @@ pub async fn get_oembed_html(
     token: &str,
 ) -> Result<OembedResponse, reqwest::Error> {
     let the_post_url = encode(post_url);
-    let url = format!(
-        "https://graph.threads.net/v1.0/oembed?url={the_post_url}\
-        &access_token={token}"
-    );
+    let url = format!("https://graph.threads.net/v1.0/oembed?url={the_post_url}");
 
     debug!("requesting oembed for: {:?}", &url);
 
     let res = reqwest::Client::new()
         .get(&url)
+        .bearer_auth(token)
         .send()
         .await?
         .json::<OembedResponse>()
@@ -49,12 +47,11 @@ mod tests {
         let env = read_dot_env();
         let token = env.get("ACCESS_TOKEN").unwrap();
 
-        let res =
-            get_oembed_html("https://www.threads.net/@dkode___/post/DHwBylVNThs", token).await;
+        let res = get_oembed_html("https://www.threads.net/@threads/post/DHvtwr8g63f", token).await;
 
         debug!("oembed response fetched: {:?}", res);
 
         assert_eq!(true, res.is_ok());
-        assert_eq!(res.unwrap().html, "");
+        assert_eq!(res.unwrap().provider_url, "https://www.threads.net/");
     }
 }

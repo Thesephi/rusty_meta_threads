@@ -1,3 +1,10 @@
+## [0.8.0] - 2025-03-31
+
+### Changed
+
+- `get_profile_info()` argument changed
+- `get_conversations()` argument changed
+
 ## [0.7.0] - 2025-03-28
 
 ### Added

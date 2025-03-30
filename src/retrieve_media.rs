@@ -69,18 +69,13 @@ pub async fn get_thread(
     fields: Option<&str>,
     token: &str,
 ) -> Result<MetaMedia, reqwest::Error> {
-    let the_fields = if let Some(f) = fields {
-        f
-    } else {
-        "id,root_post,replied_to,media_product_type,media_type,media_url,permalink,owner,username,text,timestamp,shortcode,thumbnail_url,children,is_quote_post"
-    };
+    let the_fields = fields.unwrap_or_else(|| "id,root_post,replied_to,media_product_type,media_type,media_url,permalink,owner,username,text,timestamp,shortcode,thumbnail_url,children,is_quote_post");
 
-    let url = format!(
-        "https://graph.threads.net/v1.0/{thread_id}?fields={the_fields}&access_token={token}"
-    );
+    let url = format!("https://graph.threads.net/v1.0/{thread_id}?fields={the_fields}");
 
     let res = reqwest::Client::new()
         .get(&url)
+        .bearer_auth(token)
         .send()
         .await?
         .json::<MetaMedia>()
