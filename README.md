@@ -82,6 +82,7 @@ cargo test
 # or if more details are needed
 RUST_LOG=debug cargo test
 ```
-Be aware: some tests may fail if `ACCESS_TOKEN` is expired, or malformed.
-You may get a new token as per official [Threads documentation](https://developers.facebook.com/docs/threads/get-started/get-access-tokens-and-permissions),
-and then using their Postman playground: https://www.postman.com/meta/threads/request/j8jvxf4/exchange-the-code-for-a-token
+Be aware: some tests may fail if `ACCESS_TOKEN` is expired, or
+malformed. You may get a new token as per official
+[Threads documentation](https://developers.facebook.com/docs/threads/get-started/get-access-tokens-and-permissions), and
+then using their [Postman playground](https://www.postman.com/meta/threads/request/j8jvxf4/exchange-the-code-for-a-token).
