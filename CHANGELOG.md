@@ -2,8 +2,10 @@
 
 ### Changed
 
-- more resilient invocation for `refresh_long_lived_bearer_token`
+- more resilient invocation for `create_reply()` lib fn (when `publish_media_container()` cannot be invoked as part of it)
+- more resilient invocation for `refresh_long_lived_bearer_token()` lib fn
 - dependency upgrades
+- updated README
 
 ### Fixed
 

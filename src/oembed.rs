@@ -52,6 +52,9 @@ mod tests {
         debug!("oembed response fetched: {:?}", res);
 
         assert_eq!(true, res.is_ok());
-        assert_eq!(res.unwrap().provider_url.unwrap(), "https://www.threads.net/");
+
+        let resp_data = res.unwrap();
+        assert_eq!(true, resp_data.provider_url.is_some());
+        assert_eq!(resp_data.provider_url.unwrap(), "https://www.threads.com/");
     }
 }
