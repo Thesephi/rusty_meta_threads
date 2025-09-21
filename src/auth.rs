@@ -17,7 +17,7 @@ pub struct SimpleThreadsShortLivedTokenResponse {
 pub struct SimpleThreadsLongLivedTokenResponse {
     pub access_token: Option<String>,
     pub token_type: Option<String>,
-    pub expires_in: Option<u32>,
+    pub expires_in: Option<u64>,
     #[allow(dead_code)]
     error: Option<shared::ThreadsApiRespErrorPayload>,
 }

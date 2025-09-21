@@ -4,11 +4,11 @@ use urlencoding::encode;
 
 #[derive(Deserialize, Debug)]
 pub struct OembedResponse {
-    pub version: String,
-    pub provider_name: String,
-    pub provider_url: String,
-    pub width: u64,
-    pub html: String,
+    pub version: Option<String>,
+    pub provider_name: Option<String>,
+    pub provider_url: Option<String>,
+    pub width: Option<u64>,
+    pub html: Option<String>,
 }
 
 pub async fn get_oembed_html(
@@ -24,7 +24,7 @@ pub async fn get_oembed_html(
         .get(&url)
         .bearer_auth(token)
         .send()
-        .await?
+        .await? // @TODO don't silently fail on expired token (see profiles.rs example)
         .json::<OembedResponse>()
         .await?;
 
@@ -52,6 +52,9 @@ mod tests {
         debug!("oembed response fetched: {:?}", res);
 
         assert_eq!(true, res.is_ok());
-        assert_eq!(res.unwrap().provider_url, "https://www.threads.net/");
+
+        let resp_data = res.unwrap();
+        assert_eq!(true, resp_data.provider_url.is_some());
+        assert_eq!(resp_data.provider_url.unwrap(), "https://www.threads.com/");
     }
 }

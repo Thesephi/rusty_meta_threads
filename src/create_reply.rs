@@ -31,22 +31,29 @@ pub async fn create_reply(
     }
     url.push_str(format!("&media_type={media_type}").as_str());
 
-    let media_container = reqwest::Client::new()
+    let media_container_resp = reqwest::Client::new()
         .post(&url)
         .bearer_auth(token)
         .send()
-        .await?
-        .json::<SimpleMediaObject>()
-        .await?;
+        .await?; // @TODO don't silently fail on expired token (see profiles.rs example)
+
+    let media_container = media_container_resp.json::<SimpleMediaObject>().await?;
 
     // ideally we proceed as long as we have `id` in the media_container, or poll until we have it
     // https://developers.facebook.com/docs/threads/troubleshooting#publishing-does-not-return-a-media-id
     // but for now it's alright to stick with some hardcoded wait time
     tokio::time::sleep(Duration::from_millis(publish_wait_time_ms)).await;
 
-    let res = publish_media_container(&media_container.id, token).await?;
-
-    Ok(res)
+    if let Some(container_id) = media_container.id {
+        let publish_res = publish_media_container(container_id.as_str(), token).await?;
+        Ok(publish_res)
+    } else {
+        eprintln!(
+            "could not publish reply: media_container not containing id: {:?}",
+            media_container
+        );
+        Ok(media_container)
+    }
 }
 
 #[cfg(test)]

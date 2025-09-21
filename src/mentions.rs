@@ -17,7 +17,7 @@ pub async fn get_mentions(
         .get(url)
         .bearer_auth(token)
         .send()
-        .await?
+        .await? // @TODO don't silently fail on expired token (see profiles.rs example)
         .json::<MetaMediaResponse<MetaMedia>>()
         .await?;
 

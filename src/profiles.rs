@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 pub struct ThreadsUserProfile {
-    pub id: String,
+    pub id: Option<String>,
     pub username: Option<String>,
     pub name: Option<String>,
     pub threads_profile_picture_url: Option<String>,
@@ -36,7 +36,7 @@ pub async fn get_profile_info(
             debug!("failed to retrieve Threads user profile: {:#?}", error);
             // @TODO consider using Err instead of Ok
             Ok(ThreadsUserProfile {
-                id: String::from(""),
+                id: None,
                 username: None,
                 name: None,
                 threads_biography: None,
@@ -63,6 +63,16 @@ mod tests {
         let token = env.get("ACCESS_TOKEN").unwrap();
 
         let res = get_profile_info(None, token).await;
+
+        /*
+         * @TODO test against invalid access_token, which results in this response
+         * {
+         *     message: "Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.",
+         *     code: 190,
+         *     error_subcode: None,
+         *     fbtrace_id: Some("A6p8XCWpTMHwh06sQG-Jv04"),
+         * }
+         */
 
         debug!("profile fetched {:?}", res);
 

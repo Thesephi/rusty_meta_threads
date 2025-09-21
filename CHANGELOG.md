@@ -1,3 +1,16 @@
+## [0.8.1] - 2025-09-21
+
+### Changed
+
+- more resilient invocation for `create_reply()` lib fn (when `publish_media_container()` cannot be invoked as part of it)
+- more resilient invocation for `refresh_long_lived_bearer_token()` lib fn
+- dependency upgrades
+- updated README
+
+### Fixed
+
+- most API, when failed due to invalid access_token, should error out with a clearer message than the cryptic "id not found" one
+
 ## [0.8.0] - 2025-03-31
 
 ### Changed
