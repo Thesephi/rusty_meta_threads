@@ -31,5 +31,5 @@ pub struct ThreadsApiRespErrorPayload {
     #[allow(dead_code)]
     error_subcode: Option<u32>,
     #[allow(dead_code)]
-    fbtrace_id: String,
+    fbtrace_id: Option<String>,
 }

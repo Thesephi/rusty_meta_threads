@@ -3,7 +3,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 pub struct SimpleMediaObject {
-    pub id: String,
+    pub id: Option<String>,
 }
 
 // https://developers.facebook.com/docs/threads/reply-management#a-thread-s-conversations

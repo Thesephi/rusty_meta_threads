@@ -35,7 +35,7 @@ pub async fn create_reply(
         .post(&url)
         .bearer_auth(token)
         .send()
-        .await?
+        .await? // @TODO don't silently fail on expired token (see profiles.rs example)
         .json::<SimpleMediaObject>()
         .await?;
 
@@ -44,7 +44,9 @@ pub async fn create_reply(
     // but for now it's alright to stick with some hardcoded wait time
     tokio::time::sleep(Duration::from_millis(publish_wait_time_ms)).await;
 
-    let res = publish_media_container(&media_container.id, token).await?;
+    assert_eq!(media_container.id.is_some(), true);
+
+    let res = publish_media_container(media_container.id.unwrap().as_str(), token).await?;
 
     Ok(res)
 }

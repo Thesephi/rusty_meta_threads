@@ -1,6 +1,6 @@
 [package]
 name = "rusty_meta_threads"
-version = "0.8.0"
+version = "0.8.1"
 edition = "2024"
 description = "Community Rust SDK for integrating with Meta Threads API"
 repository = "https://github.com/Thesephi/rusty_meta_threads.git"
@@ -14,10 +14,10 @@ path = "src/mod.rs"
 crate-type = ["rlib"]
 
 [dependencies]
-url = "2.5.4"
+url = "2.5.7"
 urlencoding = "2.1.3"
 reqwest = { version = "0.12", features = ["json"] }
-serde = { version = "1.0.219", features = ["derive"] }
-log = "0.4.22"
-tokio = { version = "1.44.1", features = ["rt", "macros"] }
-env_logger = "0.11.7"
+serde = { version = "1.0.226", features = ["derive"] }
+log = "0.4.28"
+tokio = { version = "1.47.1", features = ["rt", "macros"] }
+env_logger = "0.11.8"
